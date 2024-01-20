@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var bmApp = angular.module('bmApp', ['ngRoute']);
+
+bmApp.config(function ($routeProvider) {
+	$routeProvider.when('/books/:isbn', {
+		templateUrl: 'x_859308_bookmonke_book_details.do?',   //'templates/book_details.html',
+		controller: 'BookDetailsCtrl'
+	})
+	.when('/books', {
+		templateUrl: 'x_859308_bookmonke_book_list.do?',
+		controller: 'BookListCtrl'
+	})
+	.otherwise({
+		redirectTo: '/books'
+	});
+});
+
+bmApp.controller('BookDetailsCtrl', function($scope, $location, $routeParams, BookDataService) {
+	var isbn = $routeParams.isbn;
+	
+	$scope.book = BookDataService.getBookByIsbn(isbn);
+	
+	/*	
+		{
+		title : 'JavaScript für Enterprise-Entwickler',
+		subtitle : 'Professionell programmieren im Browser und auf dem Server',
+		isbn : '978-3-89864-728-1',
+		abstract : 'JavaScript ist längst nicht mehr nur für klassische Webprogrammierer interessant.',
+		numPages : 302,
+		author : 'Oliver Ochs',
+		publisher : {
+			name : 'dpunk.verlag',
+			url : 'http://dpunkt.de/'
+		}
+	};
+	*/
+	$scope.goToListView = function() {
+		$location.path('/books');
+	};
+});
+
+bmApp.controller('BookListCtrl', function ($scope, $filter, BookDataService) {
+	$scope.getBookOrder = function(book) {
+		return book.title;
+	};
+	
+	$scope.books = BookDataService.getBooks();
+	
+	var orderBy = $filter('orderBy');
+	
+	var titles = $scope.books.map(function(book) {
+		return {title: book.title};
+	});
+	
+	titles = orderBy(titles, 'title');
+	
+	/*
+		[
+		{
+			title: 'JavaScript für Enterprise-Entwickler',
+			isbn: '978-3-89864-728-1',
+			author: 'Oliver Ochs',
+		},
+		{
+			title: 'Node.js & Co.',
+			isbn: '978-3-89864-829-5',
+			author: 'Golo Roden',
+		},
+		{
+			title: 'CoffeeScript',
+			isbn: '978-3-86490-050-1',
+			author: 'Andreas Schubert',
+		}
+	];
+		}
+	];
+	*/
+		
+		
+	$scope.getBookOrder = function(book) {
+		return book.title;
+	};
+});
+
+bmApp.factory('BookDataService', function() {
+	var srv = {};
+	
+	srv._books = [
+		{
+			title: 'JavaScript für Enterprise-Entwickler',
+			subtitle : 'Professionell programmieren im Browser und auf dem Server',
+			isbn: '978-3-89864-728-1',
+			author: 'Oliver Ochs',
+			abstract : 'JavaScript ist längst nicht mehr nur für klassische Webprogrammierer interessant.',
+			numPages : 302,
+			publisher : {
+				name : 'dpunk.verlag',
+				url : 'http://dpunkt.de/'
+			}
+		},
+		{
+			title: 'Node.js & Co.',
+			subtitle : 'Skalierbare, hochperformante und echtzeitfähige Webanwendungen professionell in JavaScript entwickeln',
+			isbn: '978-3-89864-829-5',
+			author: 'Golo Roden',
+			abstract : 'Prägnante, knackige Einleitungen zu allerlei Aspekten der Webentwicklung mit diesem populären Framework werden durch allgemeine Code-Beispiele und das durchgängige Beispielprojekt anschaulich vorgestellt. Wer sich mit Node.js auseinandersetzen will und zumindest grundlegende JavaScript-Kenntnisse mitbringt, wird mit dieser Lektüre sehr zufrieden sein.',
+			numPages : 334,
+			publisher : {
+				name : 'dpunk.verlag',
+				url : 'http://dpunkt.de/'
+			}
+		},
+		{
+			title: 'CoffeeScript',
+			subtitle : 'Einfach JavaScript',
+			isbn: '978-3-86490-050-1',
+			author: 'Andreas Schubert',
+			abstract : 'CoffeeScript ist eine junge, kleine Programmiersprache, die nach JavaScript übersetzt wird',
+			numPages : 200,
+			publisher : {
+				name : 'dpunk.verlag',
+				url : 'http://dpunkt.de/'
+			}
+		}
+		];
+		
+		
+	srv.getBookByIsbn = function(isbn) {
+		for (var i = 0, n = srv._books.length; i < n; i++) {
+			if (isbn === srv._books[i].isbn) {
+				return angular.copy(srv._books[i]);
+			}
+		}
+		
+		return null;
+	};
+	
+	srv.getBooks = function() {
+		// Copy the array in order not to expose
+		// the internal data structure
+		return angular.copy(srv._books);
+	};
+	
+	// public API
+	return {
+		getBookByIsbn: function(isbn) {
+			return srv.getBookByIsbn(isbn);
+		},
+		getBooks: function() {
+			return srv.getBooks();
+		}
+	};
+});]]></client_script>
+        <description>Entry point for the application BookMonkey&#13;
+&#13;
+templateUrl: 'templates/book_details.html',</description>
+        <direct>false</direct>
+        <endpoint>x_859308_bookmonke_Index.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<g:requires name="scripts/angular_includes_1.5.11.js" includes="true" />
+	<g:requires name="x_859308_bookmonke.angular-route.jsdbx" />
+	<!--g:requires name="x_859308_bookmonke.bmApp.jsdbx" />
+	<g:requires name="x_859308_bookmonke.book_details.jsdbx" /-->
+
+	<html ng-app="bmApp">
+		<head>
+			<meta charset="utf-8"/>
+			<title>BookMonkey</title>
+		</head>
+		<body>                          <!--ng-init="name='BookMonkey'" ng-controller="BookDetailsCtrl"-->
+			<header>
+				<h1>BookMonkey</h1>               <!--Hello {{name}}</h1-->
+			</header>
+			
+			<div ng-view="">
+			</div>
+			
+			<!--h2 ng-bind="book.title"></h2>
+			<h3 ng-bind="book.subtitle"></h3>
+			<p>
+				<ul>
+					<li ng-bind-template="ISBN: {{book.isbn}}"></li>
+					<li ng-bind-template="Seiten: {{book.numPages}}"></li>
+					<li ng-bind-template="Autor: {{book.author}}"></li>
+					<li>
+						Verlag:<a ng-bind="book.publisher.name" ng-href="{{book.pulisher.url}}" target="_blank"></a>
+					</li>
+				</ul>
+			</p>
+			<hr/>
+				<p>
+					{{ book.abstract }}
+				</p>
+			<input type="text" ng-model="name" /-->
+		</body>
+	</html>
+</j:jelly>]]></html>
+        <name>Index</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-14 03:15:22</sys_created_on>
+        <sys_id>78214f5893bff51080867efdfaba1094</sys_id>
+        <sys_mod_count>42</sys_mod_count>
+        <sys_name>Index</sys_name>
+        <sys_package display_value="BookMonkey" source="x_859308_bookmonke">3d6d7a5493bff51080867efdfaba10e7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookMonkey">3d6d7a5493bff51080867efdfaba10e7</sys_scope>
+        <sys_update_name>sys_ui_page_78214f5893bff51080867efdfaba1094</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-19 16:15:05</sys_updated_on>
+    </sys_ui_page>
+</record_update>

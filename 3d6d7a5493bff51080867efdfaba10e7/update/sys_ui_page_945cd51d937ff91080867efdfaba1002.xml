@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script/>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_859308_bookmonke_book_list.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+	<input type="text" placeholder="Suchen..." ng-model="searchText" />
+	<table class="bm-book-list">
+		<tbody>
+			<tr ng-repeat="book in books | orderBy: getBookOrder | filter: searchText">
+				<td><a ng-href="#/books/{{book.isbn}}" ng-bind="book.title"></a></td>
+				<td ng-bind="book.author"></td>
+				<td ng-bind="book.isbn"></td>
+			</tr>
+		</tbody>
+	</table>
+</j:jelly>]]></html>
+        <name>book_list</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-16 22:14:56</sys_created_on>
+        <sys_id>945cd51d937ff91080867efdfaba1002</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>book_list</sys_name>
+        <sys_package display_value="BookMonkey" source="x_859308_bookmonke">3d6d7a5493bff51080867efdfaba10e7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookMonkey">3d6d7a5493bff51080867efdfaba10e7</sys_scope>
+        <sys_update_name>sys_ui_page_945cd51d937ff91080867efdfaba1002</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-17 17:56:07</sys_updated_on>
+    </sys_ui_page>
+</record_update>

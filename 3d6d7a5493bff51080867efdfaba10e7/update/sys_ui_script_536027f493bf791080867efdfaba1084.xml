@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <description/>
+        <global>false</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>x_859308_bookmonke.bmApp</name>
+        <script><![CDATA[var bmApp = angular.module('bmApp', ['ngRoute']);
+
+bmApp.config(function ($routeProvider) {
+	$routeProvider.when('/books/:isbn', {
+		templateUrl: 'x_859308_bookmonke_book_details.do?',   //'templates/book_details.html',
+		controller: 'BookDetailsCtrl'
+	});
+});
+/*
+bmApp.controller('BookDetailsCtrl', function($scope) {
+	$scope.book = {
+		title : 'JavaScript für Enterprise-Entwickler',
+		subtitle : 'Professionell programmieren im Browser und auf dem Server',
+		isbn : '978-3-89864-728-1',
+		abstract : 'JavaScript ist längst nicht mehr nur für klassische Webprogrammierer interessant.',
+		numPages : 302,
+		author : 'Oliver Ochs',
+		publisher : {
+			name : 'dpunk.verlag',
+			url : 'http://dpunkt.de/'
+		}
+	};
+});*/]]></script>
+        <script_name>bmApp</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-01-15 18:41:46</sys_created_on>
+        <sys_id>536027f493bf791080867efdfaba1084</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>x_859308_bookmonke.bmApp</sys_name>
+        <sys_package display_value="BookMonkey" source="x_859308_bookmonke">3d6d7a5493bff51080867efdfaba10e7</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="BookMonkey">3d6d7a5493bff51080867efdfaba10e7</sys_scope>
+        <sys_update_name>sys_ui_script_536027f493bf791080867efdfaba1084</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-01-16 21:53:07</sys_updated_on>
+        <ui_type>10</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>
